@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.registration.Registration;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +36,26 @@ class CloudStorageApplicationTests {
 	@Test
 	public void getLoginPage() {
 		driver.get("http://localhost:" + this.port + "/login");
+		Assertions.assertEquals("Login", driver.getTitle());
+	}
+
+	@Test
+	public void getHomePageNotLoggedIn() {
+		driver.get("http://localhost:" + this.port + "/home");
+		Assertions.assertEquals("Login", driver.getTitle());
+	}
+
+	@Test
+	public void registerLoginAndLogout() {
+		driver.get("http://localhost:" + this.port + "/login");
+		Registration registration = new Registration(driver);
+		registration.clickRegisterLink();
+		registration.registerAccount();
+		registration.getLoginPage();
+		registration.loginToAccount();
+		Assertions.assertEquals("Home", driver.getTitle());
+		registration.logoutAccount();
+		Assertions.assertNotEquals("Home", driver.getTitle());
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
