@@ -42,4 +42,11 @@ public class HomeController {
         return "home";
     }
 
+    @PostMapping("/edit")
+    public String editNote(NoteForm noteForm, Model model) {
+        noteService.updateNote(noteForm);
+        model.addAttribute("notes", noteService.getNotes());
+        return "home";
+    }
+
 }

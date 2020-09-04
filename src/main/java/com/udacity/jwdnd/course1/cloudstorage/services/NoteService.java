@@ -29,6 +29,14 @@ public class NoteService {
         this.noteMapper.insertNote(note);
     }
 
+    public void updateNote(NoteForm noteForm) {
+        Note note = new Note();
+        note.setNoteId(noteForm.getNoteId());
+        note.setNoteTitle(noteForm.getNoteTitle());
+
+        this.noteMapper.updateNote(note);
+    }
+
     public List<Note> getNotes() {
         return noteMapper.getNotes(this.id);
     }

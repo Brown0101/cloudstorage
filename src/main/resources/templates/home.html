@@ -77,11 +77,11 @@
                                 <tbody th:each="note : ${notes}">
                                     <tr>
                                         <td>
-                                            <button type="button" class="btn btn-success">Edit</button>
+                                            <button type="button" class="btn btn-success" th:onclick="showNoteModal()">Edit</button>
                                             <a class="btn btn-danger">Delete</a>
                                         </td>
                                         <th th:text="${note.noteTitle}" scope="row">Example Note Title</th>
-                                        <td th:text="${note.noteDescription}">Example Note Description </td>
+                                        <td th:text="${note.noteDescription}">Example Note Description</td>
                                     </tr>
                                 </tbody>
                             </table>
