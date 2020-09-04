@@ -31,22 +31,17 @@ public class HomeController {
 
     @PostMapping
     public String home(Authentication authentication, NoteForm noteForm, Model model) {
-        noteService.trackLoggedInUserId(authentication.getName());
-        noteService.createNote(noteForm, authentication.getName());
-        List<Note> items = noteService.getNotes();
-        for (Note item : items) {
-            System.out.println("Title: " + item.getNoteTitle());
-            System.out.println("Description: " + item.getNoteDescription());
+        // Check if data exists in database already
+        // We use this to update our data by searching
+        // for our unique id.
+        if(noteService.doesNoteExist(noteForm)) {
+            noteService.updateNote(noteForm);
+        } else {
+            noteService.trackLoggedInUserId(authentication.getName());
+            noteService.createNote(noteForm, authentication.getName());
         }
+
         model.addAttribute("notes", noteService.getNotes());
         return "home";
     }
-
-    @PostMapping("/edit")
-    public String editNote(NoteForm noteForm, Model model) {
-        noteService.updateNote(noteForm);
-        model.addAttribute("notes", noteService.getNotes());
-        return "home";
-    }
-
 }

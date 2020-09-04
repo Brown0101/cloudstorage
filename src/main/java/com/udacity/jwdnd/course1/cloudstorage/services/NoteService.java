@@ -1,7 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.NoteMapper;
-import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.Note;
 import com.udacity.jwdnd.course1.cloudstorage.models.NoteForm;
 import org.springframework.stereotype.Service;
@@ -33,8 +32,28 @@ public class NoteService {
         Note note = new Note();
         note.setNoteId(noteForm.getNoteId());
         note.setNoteTitle(noteForm.getNoteTitle());
+        note.setNoteDescription(noteForm.getNoteDescription());
 
         this.noteMapper.updateNote(note);
+    }
+
+    public void deleteNote(NoteForm noteForm) {
+        Note note = new Note();
+        note.setNoteId(noteForm.getNoteId());
+
+        this.noteMapper.deleteNote(note);
+    }
+
+    public Boolean doesNoteExist(NoteForm noteForm) {
+        Note note = new Note();
+        note.setNoteId(noteForm.getNoteId());
+        Integer idReturned = this.noteMapper.getNote(note);
+
+        if(idReturned != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public List<Note> getNotes() {
