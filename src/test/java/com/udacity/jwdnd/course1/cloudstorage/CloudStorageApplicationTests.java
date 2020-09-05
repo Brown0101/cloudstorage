@@ -79,10 +79,24 @@ class CloudStorageApplicationTests {
 		registrationTest.loginToAccount();
 
 		NotesTest notesTest = new NotesTest(driver);
+
+		// Add a note
 		notesTest.openNotesTab();
 		notesTest.addANote();
-		Assertions.assertEquals(true, notesTest.visibleNote());
+		notesTest.openNotesTab();
+		Assertions.assertEquals(true, notesTest.addNoteVisible());
 
+		// Edit a note
+		notesTest.openNotesTab();
+		notesTest.editANote();
+		notesTest.openNotesTab();
+		Assertions.assertEquals(true, notesTest.editNoteVisible());
+
+		// Delete a note
+		notesTest.openNotesTab();
+		notesTest.deleteNote();
+		notesTest.openNotesTab();
+		Assertions.assertEquals(true, notesTest.deleteNoteVisible());
 	}
 
 }
