@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
-import com.udacity.jwdnd.course1.cloudstorage.registration.Registration;
+import com.udacity.jwdnd.course1.cloudstorage.notes.NotesTest;
+import com.udacity.jwdnd.course1.cloudstorage.registration.RegistrationTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +9,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+/* IMPORTANT - We are using in memory database for this app.
+   If this is changed to not use in memory the testing can be
+   greatly improved. Also, thread.sleep is not preferred but
+   I use it to see some parts of the application in action
+   since it moves so fast through each process.
+ */
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
 
@@ -34,29 +43,46 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
+	@Order(1)
 	public void getLoginPage() {
 		driver.get("http://localhost:" + this.port + "/login");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
 	@Test
+	@Order(2)
 	public void getHomePageNotLoggedIn() {
 		driver.get("http://localhost:" + this.port + "/home");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
 	@Test
+	@Order(3)
 	public void registerLoginAndLogout() {
 		driver.get("http://localhost:" + this.port + "/login");
-		Registration registration = new Registration(driver);
-		registration.clickRegisterLink();
-		registration.registerAccount();
-		registration.getLoginPage();
-		registration.loginToAccount();
+		RegistrationTest registrationTest = new RegistrationTest(driver);
+		registrationTest.clickRegisterLink();
+		registrationTest.registerAccount();
+		registrationTest.getLoginPage();
+		registrationTest.loginToAccount();
 		Assertions.assertEquals("Home", driver.getTitle());
-		registration.logoutAccount();
+		registrationTest.logoutAccount();
 		Assertions.assertNotEquals("Home", driver.getTitle());
 		Assertions.assertEquals("Login", driver.getTitle());
+	}
+
+	@Test
+	@Order(4)
+	public void createANote() {
+		driver.get("http://localhost:" + this.port + "/login");
+		RegistrationTest registrationTest = new RegistrationTest(driver);
+		registrationTest.loginToAccount();
+
+		NotesTest notesTest = new NotesTest(driver);
+		notesTest.openNotesTab();
+		notesTest.addANote();
+		Assertions.assertEquals(true, notesTest.visibleNote());
+
 	}
 
 }

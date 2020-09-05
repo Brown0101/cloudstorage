@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class Registration {
+public class RegistrationTest {
 
     @FindBy(id = "signup-link")
     private WebElement signupLink;
@@ -31,7 +31,7 @@ public class Registration {
     @FindBy(css = "#logoutDiv > form > button")
     private WebElement logoutButton;
 
-    public Registration(WebDriver driver) {
+    public RegistrationTest(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
