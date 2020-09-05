@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,23 +26,7 @@ public class HomeController {
 
     @GetMapping
     public String home(NoteForm noteForm, Model model) {
-        model.addAttribute("notes", noteService.getNotes());
-        return "home";
-    }
-
-    @PostMapping
-    public String home(Authentication authentication, NoteForm noteForm, Model model) {
-        // Check if data exists in database already
-        // We use this to update our data by searching
-        // for our unique id.
-        if(noteService.doesNoteExist(noteForm)) {
-            noteService.updateNote(noteForm);
-        } else {
-            noteService.trackLoggedInUserId(authentication.getName());
-            noteService.createNote(noteForm, authentication.getName());
-        }
-
-        model.addAttribute("notes", noteService.getNotes());
+        model.addAttribute("notes", this.noteService.getNotes());
         return "home";
     }
 }

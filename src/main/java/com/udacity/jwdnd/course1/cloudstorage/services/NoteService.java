@@ -37,11 +37,8 @@ public class NoteService {
         this.noteMapper.updateNote(note);
     }
 
-    public void deleteNote(NoteForm noteForm) {
-        Note note = new Note();
-        note.setNoteId(noteForm.getNoteId());
-
-        this.noteMapper.deleteNote(note);
+    public void deleteNote(Integer noteId) {
+        this.noteMapper.deleteNote(noteId);
     }
 
     public Boolean doesNoteExist(NoteForm noteForm) {
