@@ -18,6 +18,7 @@ public class CredentialService {
     private Integer id;
 
     public CredentialService(CredentialMapper credentialMapper, EncryptionService encryptionService, UserService userService) {
+        System.out.println("Creating Credential Service");
         this.credentialMapper = credentialMapper;
         this.encryptionService = encryptionService;
         this.userService = userService;

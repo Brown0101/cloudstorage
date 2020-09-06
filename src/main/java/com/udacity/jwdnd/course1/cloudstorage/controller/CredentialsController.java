@@ -17,18 +17,19 @@ public class CredentialsController {
     private CredentialService credentialService;
 
     public CredentialsController(CredentialService credentialService) {
+        System.out.println("Creating Credential Controller");
         this.credentialService = credentialService;
     }
 
 
-    @GetMapping("/credential")
-    public String addCredentials(Authentication authentication, CredentialForm credentialForm, Model model) {
+    @GetMapping("/credentials")
+    public String getCredentials(CredentialForm credentialForm, Model model) {
         model.addAttribute("credentials", this.credentialService.getCredentails());
         return "home";
     }
 
-    @PostMapping("/credential")
-    public String editCredential(Authentication authentication, CredentialForm credentialForm, Model model) {
+    @PostMapping("/credentials")
+    public String addUpdateCredential(Authentication authentication, CredentialForm credentialForm, Model model) {
         // Check if data exists in database already
         // We use this to update our data by searching
         // for our unique id.
@@ -43,9 +44,9 @@ public class CredentialsController {
         return "home";
     }
 
-    @GetMapping("/notes/delete/{credentialid}")
-    public String deleteCredential(@PathVariable("credentialid") Integer noteId, CredentialForm credentialForm, Model model) {
-        this.credentialService.deleteCredential(noteId);
+    @GetMapping("/credentials/delete/{credentialid}")
+    public String deleteCredential(@PathVariable("credentialid") Integer credentialId, CredentialForm credentialForm, Model model) {
+        this.credentialService.deleteCredential(credentialId);
         model.addAttribute("credentials", this.credentialService.getCredentails());
         return "home";
     }
