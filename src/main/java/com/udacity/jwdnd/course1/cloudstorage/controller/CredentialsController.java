@@ -37,10 +37,8 @@ public class CredentialsController {
         // We use this to update our data by searching
         // for our unique id.
         if(this.credentialService.doesCredentialExist(credentialForm)) {
-            System.out.println("EXISTS Already");
             this.credentialService.updateCredential(credentialForm);
         } else {
-            System.out.println("Does not exist.");
             this.credentialService.trackLoggedInUserId(authentication.getName());
             this.credentialService.createCredential(credentialForm);
         }

@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface CredentialMapper {
-    @Select("SELECT * FROM credentials WHERE credentialid=#{credentialId}")
+    @Select("SELECT * FROM credentials WHERE userid=#{userId}")
     List<Credential> getCredentials(Integer credentialId);
 
     @Select("SELECT * FROM credentials WHERE credentialid=#{credentialId}")
@@ -19,9 +19,9 @@ public interface CredentialMapper {
     @Options(useGeneratedKeys = true, keyProperty = "credentialId")
     void insertCredential(Credential credential);
 
-    @Update("UPDATE notes SET url=#{url}, username=#{username}, password=#{password} WHERE credentialid=#{credentialId}")
+    @Update("UPDATE credentials SET url=#{url}, username=#{username}, password=#{password} WHERE credentialid=#{credentialId}")
     void updateCredential(Credential credential);
 
-    @Delete("DELETE FROM credential WHERE credentialid=#{credentialId}")
+    @Delete("DELETE FROM credentials WHERE credentialid=#{credentialId}")
     void deleteCredential(Integer id);
 }

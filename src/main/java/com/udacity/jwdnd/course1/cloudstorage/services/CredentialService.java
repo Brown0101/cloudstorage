@@ -14,14 +14,14 @@ public class CredentialService {
     private final CredentialMapper credentialMapper;
     private final EncryptionService encryptionService;
     private final UserService userService;
-    private Integer id;
+    private Integer userId;
 
     public CredentialService(CredentialMapper credentialMapper, EncryptionService encryptionService, UserService userService) {
         System.out.println("Creating Credential Service");
         this.credentialMapper = credentialMapper;
         this.encryptionService = encryptionService;
         this.userService = userService;
-        this.id = null;
+        this.userId = null;
     }
 
     public void createCredential(CredentialForm credentialForm) {
@@ -38,16 +38,9 @@ public class CredentialService {
         credential.setKey(encodedKey);
         credential.setUsername(credentialForm.getUsername());
         credential.setPassword(encryptedPassword);
-        credential.setUserId(this.id);
+        credential.setUserId(this.userId);
 
         this.credentialMapper.insertCredential(credential);
-
-        int count = 1;
-        for(Credential cred : this.getAllCredentials()) {
-            System.out.println("==============================================");
-            System.out.println(count++ + ": " + cred.getUrl());
-            System.out.println("==============================================");
-        }
     }
 
     public void updateCredential(CredentialForm credentialForm) {
@@ -65,7 +58,7 @@ public class CredentialService {
         credential.setKey(encodedKey);
         credential.setUsername(credentialForm.getUsername());
         credential.setPassword(encryptedPassword);
-        System.out.println("Dude! Why am I trying to update LOL");
+
         this.credentialMapper.updateCredential(credential);
     }
 
@@ -86,10 +79,10 @@ public class CredentialService {
     }
 
     public List<Credential> getAllCredentials() {
-        return credentialMapper.getCredentials(this.id);
+        return credentialMapper.getCredentials(this.userId);
     }
 
     public void trackLoggedInUserId(String username) {
-        this.id = userService.getUser(username).getUserId();
+        this.userId = userService.getUser(username).getUserId();
     }
 }

@@ -12,19 +12,19 @@ public class NoteService {
 
     private final NoteMapper noteMapper;
     private final UserService userService;
-    private Integer id;
+    private Integer userId;
 
     public NoteService(NoteMapper noteMapper, UserService userService) {
         this.noteMapper = noteMapper;
         this.userService = userService;
-        this.id = null;
+        this.userId = null;
     }
 
     public void createNote(NoteForm noteForm) {
         Note note = new Note();
         note.setNoteTitle(noteForm.getNoteTitle());
         note.setNoteDescription(noteForm.getNoteDescription());
-        note.setUserId(this.id);
+        note.setUserId(this.userId);
         this.noteMapper.insertNote(note);
     }
 
@@ -54,11 +54,11 @@ public class NoteService {
     }
 
     public List<Note> getNotes() {
-        return noteMapper.getNotes(this.id);
+        return noteMapper.getNotes(this.userId);
     }
 
     public void trackLoggedInUserId(String username) {
-        this.id = userService.getUser(username).getUserId();
+        this.userId = userService.getUser(username).getUserId();
     }
 
 }
