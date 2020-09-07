@@ -20,7 +20,7 @@ public class NoteService {
         this.id = null;
     }
 
-    public void createNote(NoteForm noteForm, String username) {
+    public void createNote(NoteForm noteForm) {
         Note note = new Note();
         note.setNoteTitle(noteForm.getNoteTitle());
         note.setNoteDescription(noteForm.getNoteDescription());

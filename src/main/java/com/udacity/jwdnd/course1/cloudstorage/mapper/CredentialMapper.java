@@ -1,7 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
-import com.udacity.jwdnd.course1.cloudstorage.models.Note;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -16,9 +15,9 @@ public interface CredentialMapper {
     @Select("SELECT * FROM credentials WHERE credentialid=#{credentialId}")
     Integer getCredential(Credential credentialId);
 
-    @Insert("INSERT into Credential(url, username, key, password, userid) VALUES(#{url}, #{username}, #{key}), #{password}), #{userId})")
+    @Insert("INSERT into Credentials(url, username, key, password, userid) VALUES(#{url}, #{username}, #{key}, #{password}, #{userId})")
     @Options(useGeneratedKeys = true, keyProperty = "credentialId")
-    int insertCredential(Credential credential);
+    void insertCredential(Credential credential);
 
     @Update("UPDATE notes SET url=#{url}, username=#{username}, password=#{password} WHERE credentialid=#{credentialId}")
     void updateCredential(Credential credential);
