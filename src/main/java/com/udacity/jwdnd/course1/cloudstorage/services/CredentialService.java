@@ -26,11 +26,8 @@ public class CredentialService {
 
     public void createCredential(CredentialForm credentialForm) {
         // Setup encryption
-        SecureRandom random = new SecureRandom();
-        byte[] key = new byte[16];
-        random.nextBytes(key);
-        String encodedKey = Base64.getEncoder().encodeToString(key);
-        String encryptedPassword = encryptionService.encryptValue(credentialForm.getPassword(), encodedKey);
+        String encodedKey = this.generateEncodedKey();
+        String encryptedPassword = this.createEncryptedPassword(credentialForm.getPassword(), encodedKey);
 
         // Assign values
         Credential credential = new Credential();
@@ -45,11 +42,8 @@ public class CredentialService {
 
     public void updateCredential(CredentialForm credentialForm) {
         // Setup encryption
-        SecureRandom random = new SecureRandom();
-        byte[] key = new byte[16];
-        random.nextBytes(key);
-        String encodedKey = Base64.getEncoder().encodeToString(key);
-        String encryptedPassword = encryptionService.encryptValue(credentialForm.getPassword(), encodedKey);
+        String encodedKey = this.generateEncodedKey();
+        String encryptedPassword = this.createEncryptedPassword(credentialForm.getPassword(), encodedKey);
 
         // Assign values
         Credential credential = new Credential();
@@ -76,6 +70,24 @@ public class CredentialService {
         } else {
             return false;
         }
+    }
+
+    private String generateEncodedKey() {
+        // Setup key
+        SecureRandom random = new SecureRandom();
+        byte[] key = new byte[16];
+        random.nextBytes(key);
+
+        return Base64.getEncoder().encodeToString(key);
+    }
+
+    private String createEncryptedPassword(String password, String encodedKey) {
+        // Setup password
+        return encryptionService.encryptValue(password, encodedKey);
+    }
+
+    public String decryptPassword(String encryptedPassword, String encodedKey) {
+        return encryptionService.decryptValue(encryptedPassword, encodedKey);
     }
 
     public List<Credential> getAllCredentials() {
