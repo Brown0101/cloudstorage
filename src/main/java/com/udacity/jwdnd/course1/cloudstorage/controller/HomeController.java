@@ -28,7 +28,7 @@ public class HomeController {
     public String home(NoteForm noteForm, CredentialForm credentialForm, Model model) {
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("encryption", this.credentialService);
+        model.addAttribute("encryption", this.encryptionService);
         return "home";
     }
 }

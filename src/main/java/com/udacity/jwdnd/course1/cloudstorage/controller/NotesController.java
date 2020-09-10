@@ -28,7 +28,7 @@ public class NotesController {
     public String getNotes(NoteForm noteForm, CredentialForm credentialForm, Model model) {
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("encryption", this.credentialService);
+        model.addAttribute("encryption", this.encryptionService);
         return "home";
     }
 
@@ -46,7 +46,7 @@ public class NotesController {
 
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("encryption", this.credentialService);
+        model.addAttribute("encryption", this.encryptionService);
         return "home";
     }
 
@@ -55,7 +55,7 @@ public class NotesController {
         this.noteService.deleteNote(noteId);
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("encryption", this.credentialService);
+        model.addAttribute("encryption", this.encryptionService);
         return "home";
     }
 }

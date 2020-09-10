@@ -140,7 +140,7 @@
                                 <tr>
                                     <td>
                                         <button type="button" class="btn btn-success"
-                                                th:onclick="javascript:showCredentialModal( [[${credential.getCredentialId()}]],[[${credential.getUrl()}]],[[${credential.getUsername()}]],[[${encryption.decryptPassword(credential.getPassword(), credential.getKey())}]] )">
+                                                th:onclick="javascript:showCredentialModal( [[${credential.getCredentialId()}]],[[${credential.getUrl()}]],[[${credential.getUsername()}]],[[${encryption.decryptValue(credential.getPassword(), credential.getKey())}]] )">
                                             Edit
                                         </button>
                                         <a class="btn btn-danger" th:href="@{/credentials/delete/{credentialid}(credentialid=${credential.credentialId})}">Delete</a>

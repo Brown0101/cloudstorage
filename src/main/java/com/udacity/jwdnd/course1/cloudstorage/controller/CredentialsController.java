@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.models.CredentialForm;
 import com.udacity.jwdnd.course1.cloudstorage.models.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
@@ -29,7 +30,7 @@ public class CredentialsController {
     public String getCredentials(CredentialForm credentialForm, NoteForm noteForm, Model model) {
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("encryption", this.credentialService);
+        model.addAttribute("encryption", this.encryptionService);
         return "home";
     }
 
@@ -48,7 +49,8 @@ public class CredentialsController {
 
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("encryption", this.credentialService);
+        model.addAttribute("encryption", this.encryptionService);
+
         return "home";
     }
 
@@ -57,7 +59,7 @@ public class CredentialsController {
         this.credentialService.deleteCredential(credentialId);
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("encryption", this.credentialService);
+        model.addAttribute("encryption", this.encryptionService);
         return "home";
     }
 }
