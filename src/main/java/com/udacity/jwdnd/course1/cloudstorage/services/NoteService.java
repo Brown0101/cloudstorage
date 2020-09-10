@@ -25,6 +25,7 @@ public class NoteService {
         note.setNoteTitle(noteForm.getNoteTitle());
         note.setNoteDescription(noteForm.getNoteDescription());
         note.setUserId(this.userId);
+
         this.noteMapper.insertNote(note);
     }
 

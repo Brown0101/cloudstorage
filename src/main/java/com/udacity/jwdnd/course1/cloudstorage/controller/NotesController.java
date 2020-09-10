@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.CredentialForm;
+import com.udacity.jwdnd.course1.cloudstorage.models.Note;
 import com.udacity.jwdnd.course1.cloudstorage.models.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
@@ -47,6 +48,7 @@ public class NotesController {
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("encryption", this.encryptionService);
+
         return "home";
     }
 

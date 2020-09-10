@@ -86,10 +86,6 @@ public class CredentialService {
         return encryptionService.encryptValue(password, encodedKey);
     }
 
-    public String decryptPassword(String encryptedPassword, String encodedKey) {
-        return encryptionService.decryptValue(encryptedPassword, encodedKey);
-    }
-
     public List<Credential> getAllCredentials() {
         return credentialMapper.getCredentials(this.userId);
     }
