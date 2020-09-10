@@ -49,9 +49,9 @@ public class NotesTest {
 
     public void openNotesTab() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             jse.executeScript("arguments[0].click()", navNotestab);
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         } catch (Exception e) {
             System.out.println("Failed to find Note tab...");
         }
@@ -59,7 +59,7 @@ public class NotesTest {
 
     public void addANote() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             new WebDriverWait(this.driver, 5)
                     .until(ExpectedConditions.elementToBeClickable(addNoteButton))
                     .click();
@@ -77,7 +77,7 @@ public class NotesTest {
 
     public void editANote() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             new WebDriverWait(this.driver, 5)
                     .until(ExpectedConditions.elementToBeClickable(editNoteButton))
                     .click();
@@ -101,7 +101,7 @@ public class NotesTest {
 
     public void deleteNote() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             new WebDriverWait(this.driver, 5)
                     .until(ExpectedConditions.elementToBeClickable(deleteNoteButton))
                     .click();
@@ -140,7 +140,7 @@ public class NotesTest {
 
     public Boolean deleteNoteVisible() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             // This will fail to find elements if they do nto exist.
             System.out.println(this.isNoteTitleVisable.getText());
             System.out.println(this.isNoteDescriptionVisable.getText());

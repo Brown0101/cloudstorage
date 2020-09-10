@@ -41,7 +41,7 @@ public class RegistrationTest {
 
     public void registerAccount() {
         try{
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             System.out.println("Sending Keys to input fields!");
             firstName.sendKeys("Frank");
             lastName.sendKeys("Dukes");
@@ -55,7 +55,7 @@ public class RegistrationTest {
 
     public void getLoginPage() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             loginLink.click();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -64,12 +64,12 @@ public class RegistrationTest {
 
     public void loginToAccount() {
         try{
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             System.out.println("Sending Keys to input fields!");
             username.sendKeys("fdukes");
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             password.sendKeys("superSecret");
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             submitButton.click();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -78,7 +78,7 @@ public class RegistrationTest {
 
     public void logoutAccount() {
         try{
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             System.out.println("Sending Keys to input fields!");
             logoutButton.click();
         } catch (Exception e) {

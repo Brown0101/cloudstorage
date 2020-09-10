@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.credentials.CredentialTest;
 import com.udacity.jwdnd.course1.cloudstorage.notes.NotesTest;
 import com.udacity.jwdnd.course1.cloudstorage.registration.RegistrationTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -97,6 +98,36 @@ class CloudStorageApplicationTests {
 		notesTest.deleteNote();
 		notesTest.openNotesTab();
 		Assertions.assertEquals(true, notesTest.deleteNoteVisible());
+	}
+
+	@Test
+	@Order(5)
+	public void createACredentials() {
+		driver.get("http://localhost:" + this.port + "/login");
+		RegistrationTest registrationTest = new RegistrationTest(driver);
+		registrationTest.loginToAccount();
+
+		CredentialTest credentialTest = new CredentialTest(driver);
+
+		// Add three Credentials
+		for(int index = 0; index < 3; index++) {
+			credentialTest.openCredentialsTab();
+			credentialTest.addCredential(index);
+		}
+
+		// Is the Admin Password Encrypted
+		credentialTest.openCredentialsTab();
+		Assertions.assertEquals(true, credentialTest.getCurrentAdminEncryptedCredentails());
+
+		// Check if staff password can be unencrypted during editing
+		Assertions.assertEquals(true, credentialTest.visibleStaffCredential());
+
+		// Check if password can be changed and encryption updated
+		Assertions.assertEquals(true, credentialTest.editStaffCredential());
+
+		// Check if we can delete the repository entry
+		credentialTest.openCredentialsTab();
+		Assertions.assertEquals(true, credentialTest.deleteRepositoryCredentials());
 	}
 
 }
