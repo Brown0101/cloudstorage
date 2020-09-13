@@ -135,7 +135,6 @@ public class NotesTest {
             if(this.isNoteTitleVisable.getText().contains("Note Title Test") &&
                     this.isNoteDescriptionVisable.getText()
                             .contains("Here is my example description for my test note!")) {
-                System.out.println("It is equal");
                 return true;
             }
             return false;
