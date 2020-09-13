@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
 import com.udacity.jwdnd.course1.cloudstorage.credentials.CredentialTest;
+import com.udacity.jwdnd.course1.cloudstorage.files.FilesTest;
 import com.udacity.jwdnd.course1.cloudstorage.notes.NotesTest;
 import com.udacity.jwdnd.course1.cloudstorage.registration.RegistrationTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -130,4 +131,27 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals(true, credentialTest.deleteRepositoryCredentials());
 	}
 
+	@Test
+	@Order(6)
+	// Not a requirement but created test out of practice
+	public void fileManagementTest() {
+		driver.get("http://localhost:" + this.port + "/login");
+		RegistrationTest registrationTest = new RegistrationTest(driver);
+
+		registrationTest.clickRegisterLink();
+		registrationTest.registerAccount();
+		registrationTest.getLoginPage();
+
+		registrationTest.loginToAccount();
+
+		FilesTest filesTest = new FilesTest(driver);
+		filesTest.uploadFile();
+		Assertions.assertEquals(true, filesTest.fileUploadedExists());
+		filesTest.viewFile();
+		Assertions.assertEquals(true, filesTest.fileDownloaded());
+		filesTest.deleteFile();
+		Assertions.assertEquals(false, filesTest.fileUploadedExists());
+
+
+	}
 }
