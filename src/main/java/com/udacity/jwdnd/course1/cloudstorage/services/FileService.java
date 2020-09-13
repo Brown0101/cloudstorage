@@ -31,13 +31,10 @@ public class FileService {
         this.fileMapper.insertFile(file);
     }
 
-    public void updateFile(FileForm fileForm) {
+    public File getSingleFile(String fileName) {
         File file = new File();
-//        note.setNoteId(noteForm.getNoteId());
-//        note.setNoteTitle(noteForm.getNoteTitle());
-//        note.setNoteDescription(noteForm.getNoteDescription());
-//
-//        this.noteMapper.updateNote(note);
+
+        return fileMapper.getFileData(fileName);
     }
 
     public void deleteFile(Integer fileId) {
