@@ -48,69 +48,75 @@ public class NotesTest {
     }
 
     public void openNotesTab() {
+        System.out.println("Opening the Notes tab");
         try {
             Thread.sleep(1000);
-            jse.executeScript("arguments[0].click()", navNotestab);
+            jse.executeScript("arguments[0].click()", this.navNotestab);
             Thread.sleep(1000);
         } catch (Exception e) {
-            System.out.println("Failed to find Note tab...");
+            System.out.println(e.getMessage());
         }
     }
 
     public void addANote() {
+        System.out.println("Adding a note");
         try {
-            Thread.sleep(1000);
-            new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.elementToBeClickable(addNoteButton))
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.elementToBeClickable(this.addNoteButton))
                     .click();
-            new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.visibilityOf(noteTitleText))
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.visibilityOf(this.noteTitleText))
                     .sendKeys("Note Title Test");
-            new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.visibilityOf(noteDescriptionText))
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.visibilityOf(this.noteDescriptionText))
                     .sendKeys("Here is my example description for my test note!");
-            noteSaveButton.click();
+            new WebDriverWait(this.driver, 5)
+                    .until(ExpectedConditions.elementToBeClickable(this.noteSaveButton))
+                    .click();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
     public void editANote() {
+        System.out.println("Editing the existing test note");
         try {
-            Thread.sleep(1000);
-            new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.elementToBeClickable(editNoteButton))
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.elementToBeClickable(this.editNoteButton))
                     .click();
-            new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.visibilityOf(noteTitleText))
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.visibilityOf(this.noteTitleText))
                     .clear();
-            new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.visibilityOf(noteDescriptionText))
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.visibilityOf(this.noteDescriptionText))
                     .clear();
-            new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.visibilityOf(noteTitleText))
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.visibilityOf(this.noteTitleText))
                     .sendKeys("Changed Title");
-            new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.visibilityOf(noteDescriptionText))
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.visibilityOf(this.noteDescriptionText))
                     .sendKeys("Changed my description!");
-            noteSaveButton.click();
+            new WebDriverWait(this.driver, 5)
+                    .until(ExpectedConditions.elementToBeClickable(this.noteSaveButton))
+                    .click();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
     public void deleteNote() {
+        System.out.println("Deleting our existing note");
         try {
-            Thread.sleep(1000);
-            new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.elementToBeClickable(deleteNoteButton))
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.elementToBeClickable(this.deleteNoteButton))
                     .click();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
     public Boolean editNoteVisible() {
+        System.out.println("Validating note can be edited");
         try {
             if(this.isNoteTitleVisable.getText().contains("Changed Title") &&
                     this.isNoteDescriptionVisable.getText().contains("Changed my description!")){
@@ -118,12 +124,13 @@ public class NotesTest {
             }
             return false;
         } catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return false;
         }
     }
 
     public Boolean addNoteVisible() {
+        System.out.println("Validate we can add a new note");
         try {
             if(this.isNoteTitleVisable.getText().contains("Note Title Test") &&
                     this.isNoteDescriptionVisable.getText()
@@ -139,8 +146,8 @@ public class NotesTest {
     }
 
     public Boolean deleteNoteVisible() {
+        System.out.println("Validate we can delete a note");
         try {
-            Thread.sleep(1000);
             // This will fail to find elements if they do nto exist.
             System.out.println(this.isNoteTitleVisable.getText());
             System.out.println(this.isNoteDescriptionVisable.getText());

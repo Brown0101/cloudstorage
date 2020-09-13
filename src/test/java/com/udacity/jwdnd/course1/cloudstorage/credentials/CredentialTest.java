@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.aop.scope.ScopedProxyUtils;
 
 
 public class CredentialTest {
@@ -64,64 +65,64 @@ public class CredentialTest {
     }
 
     public void openCredentialsTab() {
+        System.out.println("Opening the credentials tab");
         try {
             Thread.sleep(1000);
             jse.executeScript("arguments[0].click()", this.navCredentialsTab);
             Thread.sleep(1000);
         } catch (Exception e) {
-            System.out.println("Failed to find Note tab...");
+            System.out.println(e.getMessage());
         }
     }
 
     public void addCredential(int index) {
+        System.out.println("Created test data and adding three new credentials");
         String[] urls = {"http://www.yahoo.com", "http://www.google.com", "http://www.amazon.com"};
         String[] usernames = {"admin", "staff", "repository"};
         String[] passwords = {"password123", "supersecrete", "onlyatest"};
         try {
-            Thread.sleep(1000);
-            new WebDriverWait(this.driver, 5)
+            new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.elementToBeClickable(this.addCredentialButton))
                     .click();
-            new WebDriverWait(this.driver, 5)
+            new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.visibilityOf(this.credentialUrlText))
                     .sendKeys(urls[index]);
-            new WebDriverWait(this.driver, 5)
+            new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.visibilityOf(this.credentialUsernameText))
                     .sendKeys(usernames[index]);
-            new WebDriverWait(this.driver, 5)
+            new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.visibilityOf(this.credentialPasswordText))
                     .sendKeys(passwords[index]);
-            this.credentialSaveButton.click();
-            Thread.sleep(1000);
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.elementToBeClickable(this.credentialSaveButton))
+                    .click();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
     public Boolean editStaffCredential() {
+        System.out.println("Validating if we can edit using staff test credentials");
         try {
-            Thread.sleep(1000);
-            new WebDriverWait(this.driver, 5)
+            new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.elementToBeClickable(this.editStaffButton))
                     .click();
-            Thread.sleep(1000);
-            String staffEncryptedPassword = new WebDriverWait(this.driver, 5)
+            String staffEncryptedPassword = new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.elementToBeClickable(this.staffCurrentCredentials))
                     .getText();
-            new WebDriverWait(this.driver, 5)
+            new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.visibilityOf(this.credentialPasswordText))
                     .clear();
-            new WebDriverWait(this.driver, 5)
+            new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.visibilityOf(this.credentialPasswordText))
                     .sendKeys("superdupersecrete");
-            this.credentialSaveButton.click();
-            Thread.sleep(1000);
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.elementToBeClickable(this.credentialSaveButton))
+                    .click();
             this.openCredentialsTab();
-            Thread.sleep(1000);
-            String newStaffEncryptedPassword = new WebDriverWait(this.driver, 5)
+            String newStaffEncryptedPassword = new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.elementToBeClickable(this.staffCurrentCredentials))
                     .getText();
-            Thread.sleep(1000);
             if( !(staffEncryptedPassword.equals(newStaffEncryptedPassword)) ) {
                 System.out.println("Staff ENCRYPTED password of \"" + staffEncryptedPassword + "\" CHANGED to \"" + newStaffEncryptedPassword);
                 return true;
@@ -136,17 +137,17 @@ public class CredentialTest {
     }
 
     public Boolean visibleStaffCredential() {
+        System.out.println("Validating if staff credentials are visible");
         try {
-            Thread.sleep(1000);
-            new WebDriverWait(this.driver, 5)
+            new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.elementToBeClickable(this.editStaffButton))
                     .click();
-            Thread.sleep(1000);
-            String staffUnencrytedPassword = new WebDriverWait(this.driver, 5)
+            String staffUnencrytedPassword = new WebDriverWait(this.driver, 15)
                     .until(ExpectedConditions.visibilityOf(this.credentialPasswordText))
                     .getAttribute("value");
-            this.closeStaffButton.click();
-            Thread.sleep(1000);
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.elementToBeClickable(this.closeStaffButton))
+                    .click();
 
             if(staffUnencrytedPassword.equals("supersecrete")) {
                 System.out.println("Staff UNENCRYPTED password of \"" + staffUnencrytedPassword + "\" EQUALS \"supersecrete\" meaning it is viewable.");
@@ -161,8 +162,8 @@ public class CredentialTest {
     }
 
     public Boolean getCurrentAdminEncryptedCredentails() {
+        System.out.println("Validating if admin test account credentials are encrypted");
         try {
-            Thread.sleep(2000);
             String adminPassword = new WebDriverWait(this.driver, 5)
                     .until(ExpectedConditions.elementToBeClickable(this.adminCurrentCredentials))
                     .getText();
@@ -180,14 +181,16 @@ public class CredentialTest {
     }
 
     public Boolean deleteRepositoryCredentials() {
+        System.out.println("Deleting the repository test credentials");
         try {
-            Thread.sleep(1000);
             if(this.repositoryCurrentStatus.getText().length() > 0) {
                 System.out.println("Repository is an active entry");
             }
 
             System.out.println("Deleting repository entry.");
-            this.deleteRepositoryButton.click();
+            new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.elementToBeClickable(this.deleteRepositoryButton))
+                    .click();
 
             // If entry does not exist this will jump into the catch area as expected.
             Boolean isActive = this.repositoryCurrentStatus.getText().length() > 0;

@@ -138,10 +138,6 @@ class CloudStorageApplicationTests {
 		driver.get("http://localhost:" + this.port + "/login");
 		RegistrationTest registrationTest = new RegistrationTest(driver);
 
-		registrationTest.clickRegisterLink();
-		registrationTest.registerAccount();
-		registrationTest.getLoginPage();
-
 		registrationTest.loginToAccount();
 
 		FilesTest filesTest = new FilesTest(driver);
