@@ -2,9 +2,11 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.models.CredentialForm;
+import com.udacity.jwdnd.course1.cloudstorage.models.FileForm;
 import com.udacity.jwdnd.course1.cloudstorage.models.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
+import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,23 +21,27 @@ public class CredentialsController {
     private CredentialService credentialService;
     private NoteService noteService;
     private EncryptionService encryptionService;
+    private FileService fileService;
 
-    public CredentialsController(CredentialService credentialService, NoteService noteService, EncryptionService encryptionService) {
+    public CredentialsController(CredentialService credentialService, NoteService noteService, EncryptionService encryptionService, FileService fileService) {
         this.credentialService = credentialService;
         this.noteService = noteService;
         this.encryptionService = encryptionService;
+        this.fileService = fileService;
     }
 
     @GetMapping("/credentials")
-    public String getCredentials(CredentialForm credentialForm, NoteForm noteForm, Model model) {
+    public String getCredentials(CredentialForm credentialForm, NoteForm noteForm, FileForm fileForm, Model model) {
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("encryption", this.encryptionService);
+        model.addAttribute("files", this.fileService.getFiles());
+
         return "home";
     }
 
     @PostMapping("/credentials")
-    public String addUpdateCredential(Authentication authentication, CredentialForm credentialForm, NoteForm noteForm,  Model model) {
+    public String addUpdateCredential(Authentication authentication, CredentialForm credentialForm, NoteForm noteForm, FileForm fileForm, Model model) {
         // Check if data exists in database already
         // We use this to update our data by searching
         // for our unique id.
@@ -50,16 +56,19 @@ public class CredentialsController {
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("encryption", this.encryptionService);
+        model.addAttribute("files", this.fileService.getFiles());
 
         return "home";
     }
 
     @GetMapping("/credentials/delete/{credentialid}")
-    public String deleteCredential(@PathVariable("credentialid") Integer credentialId, CredentialForm credentialForm, NoteForm noteForm,  Model model) {
+    public String deleteCredential(@PathVariable("credentialid") Integer credentialId, CredentialForm credentialForm, NoteForm noteForm, FileForm fileForm, Model model) {
         this.credentialService.deleteCredential(credentialId);
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("encryption", this.encryptionService);
+        model.addAttribute("files", this.fileService.getFiles());
+
         return "home";
     }
 }

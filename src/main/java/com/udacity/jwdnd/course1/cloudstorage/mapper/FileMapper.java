@@ -16,10 +16,10 @@ public interface FileMapper {
     @Select("SELECT * FROM files WHERE fileid=#{fileId}")
     Integer getFile(File fileId);
 
-    @Insert("INSERT into Files(filename, contenttype, filesize, userid, filedata) VALUES(#{filename}, #{username}, #{contenttype}, #{filesize}, #{userId}), #{filedata})")
+    @Insert("INSERT into Files(filename, contenttype, filesize, userid, filedata) VALUES(#{fileName}, #{contentType}, #{fileSize}, #{userId}, #{fileData})")
     @Options(useGeneratedKeys = true, keyProperty = "fileId")
     void insertFile(File file);
 
-    @Delete("DELETE FROM files WHERE credentialid=#{fileId}")
+    @Delete("DELETE FROM files WHERE fileid=#{fileId}")
     void deleteFile(Integer id);
 }

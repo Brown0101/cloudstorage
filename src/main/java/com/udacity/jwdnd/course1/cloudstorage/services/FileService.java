@@ -22,11 +22,13 @@ public class FileService {
 
     public void createFile(FileForm fileForm) {
         File file = new File();
-//        note.setNoteTitle(noteForm.getNoteTitle());
-//        note.setNoteDescription(noteForm.getNoteDescription());
-//        note.setUserId(this.userId);
-//
-//        this.noteMapper.insertNote(note);
+        file.setUserId(this.userId);
+        file.setFileName(fileForm.getFileName());
+        file.setContentType(fileForm.getContentType());
+        file.setFileSize(fileForm.getFileSize());
+        file.setFileData(fileForm.getFileData());
+
+        this.fileMapper.insertFile(file);
     }
 
     public void updateFile(FileForm fileForm) {
