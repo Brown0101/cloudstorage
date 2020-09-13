@@ -77,9 +77,11 @@ public class FileController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<Resource>  downloadFile(@RequestParam String fileName) {
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
-                fileService.getSingleFile(fileName).getFileName() + "\"").body(fileService.getSingleFile(fileName)))
+    public ResponseEntity<ByteArrayResource>  downloadFile(@RequestParam String fileName) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(this.fileService.getSingleFile(fileName).getContentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileService.getSingleFile(fileName).getFileName() + "\"")
+                .body(new ByteArrayResource(fileService.getSingleFile(fileName).getFileData()));
     }
 
     @GetMapping("/files/delete/{fileid}")
