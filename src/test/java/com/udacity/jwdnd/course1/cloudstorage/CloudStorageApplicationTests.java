@@ -46,21 +46,21 @@ class CloudStorageApplicationTests {
 
 	@Test
 	@Order(1)
-	public void getLoginPage() {
+	public void verifyUserCanAccessTheLoginPageTest() {
 		driver.get("http://localhost:" + this.port + "/login");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
 	@Test
 	@Order(2)
-	public void getHomePageNotLoggedIn() {
+	public void verifyUserCanOnlyAccessLoginPageTest() {
 		driver.get("http://localhost:" + this.port + "/home");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
 	@Test
 	@Order(3)
-	public void registerLoginAndLogout() {
+	public void verifySignupLoginAndGetsHomePageLogoutTest() {
 		driver.get("http://localhost:" + this.port + "/login");
 		RegistrationTest registrationTest = new RegistrationTest(driver);
 		registrationTest.clickRegisterLink();
@@ -75,7 +75,7 @@ class CloudStorageApplicationTests {
 
 	@Test
 	@Order(4)
-	public void createANote() {
+	public void createViewEditDeleteANoteTest() {
 		driver.get("http://localhost:" + this.port + "/login");
 		RegistrationTest registrationTest = new RegistrationTest(driver);
 		registrationTest.loginToAccount();
@@ -103,7 +103,7 @@ class CloudStorageApplicationTests {
 
 	@Test
 	@Order(5)
-	public void createACredentials() {
+	public void createViewEditDeleteCredentialsTest() {
 		driver.get("http://localhost:" + this.port + "/login");
 		RegistrationTest registrationTest = new RegistrationTest(driver);
 		registrationTest.loginToAccount();
@@ -134,7 +134,7 @@ class CloudStorageApplicationTests {
 	@Test
 	@Order(6)
 	// Not a requirement but created test out of practice
-	public void fileManagementTest() {
+	public void createViewDeleteCredentialTest() {
 		driver.get("http://localhost:" + this.port + "/login");
 		RegistrationTest registrationTest = new RegistrationTest(driver);
 
