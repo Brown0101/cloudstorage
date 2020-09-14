@@ -58,11 +58,14 @@ public class FileController {
             System.out.println(e.getMessage());
         }
 
+        String error = null;
+
         // Check if data exists in database already
         // We use this to update our data by searching
         // for our unique id.
         if(this.fileService.doesFileExist(fileForm)) {
-            System.out.println("Notify user file already exists!!!");
+            error = "Sorry, files containing the same name can't up uploaded. Trying renaming your file then upload it again.";
+            System.out.println(error);
         } else {
             this.fileService.trackLoggedInUserId(authentication.getName());
             this.fileService.createFile(fileForm);
@@ -72,6 +75,8 @@ public class FileController {
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("encryption", this.encryptionService);
+        model.addAttribute("encryption", this.encryptionService);
+        model.addAttribute("error", error);
 
         return "home";
     }

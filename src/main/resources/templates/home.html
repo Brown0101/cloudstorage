@@ -37,6 +37,7 @@
                                     <div class="col-sm-4">
                                         <button type="submit" class="btn btn-dark">Upload</button>
                                     </div>
+                                    <h6 th:if="${error != null}" th:text="${error}" style="color:red"></h6>
                                 </div>
                             </div>
                         </form>

@@ -43,7 +43,7 @@ public class FileService {
 
     public Boolean doesFileExist(FileForm fileForm) {
         File file = new File();
-        file.setFileId(fileForm.getFileId());
+        file.setFileName(fileForm.getFileName());
         Integer idReturned = this.fileMapper.getFile(file);
 
         if(idReturned != null) {

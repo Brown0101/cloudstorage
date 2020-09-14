@@ -13,7 +13,7 @@ public interface FileMapper {
     @Select("SELECT * FROM files WHERE userid=#{userId}")
     List<File> getFiles(Integer fileId);
 
-    @Select("SELECT * FROM files WHERE fileid=#{fileId}")
+    @Select("SELECT * FROM files WHERE filename=#{fileName}")
     Integer getFile(File fileId);
 
     @Select("SELECT * FROM files WHERE fileName=#{fileName}")
