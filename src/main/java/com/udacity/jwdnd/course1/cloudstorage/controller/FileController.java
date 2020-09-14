@@ -65,7 +65,6 @@ public class FileController {
         // for our unique id.
         if(this.fileService.doesFileExist(fileForm)) {
             error = "Sorry, files containing the same name can't up uploaded. Trying renaming your file then upload it again.";
-            System.out.println(error);
         } else {
             this.fileService.trackLoggedInUserId(authentication.getName());
             this.fileService.createFile(fileForm);
