@@ -62,8 +62,10 @@ public class FileController {
 
         // Check if data exists in database already
         // We use this to update our data by searching
-        // for our unique id.
-        if(this.fileService.doesFileExist(fileForm)) {
+        // for our unique id or name is blank.
+        if(fileForm.getFileName().isBlank() || fileForm.getFileName().isEmpty() || fileForm.getFileName().equals(null)) {
+            error = "Sorry, you must attach a file prior to uploading.";
+        } else if(this.fileService.doesFileExist(fileForm)) {
             error = "Sorry, files containing the same name can't up uploaded. Trying renaming your file then upload it again.";
         } else {
             this.fileService.trackLoggedInUserId(authentication.getName());
