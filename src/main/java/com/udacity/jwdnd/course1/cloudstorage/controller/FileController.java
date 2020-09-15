@@ -87,8 +87,6 @@ public class FileController {
 
     @GetMapping("/download")
     public ResponseEntity<ByteArrayResource>  downloadFile(@RequestParam String fileName, Model model) {
-        String file = fileName + " was downloaded successfully!";
-        model.addAttribute("success", file);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(this.fileService.getSingleFile(fileName).getContentType()))

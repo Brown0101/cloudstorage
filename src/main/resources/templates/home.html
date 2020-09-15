@@ -15,6 +15,10 @@
                     <button type="submit" class="btn btn-secondary float-right">Logout</button>
                 </form>
             </div>
+            <div>
+                <h6 th:if="${success != null}" th:text="${success}" style="color:darkgreen"></h6>
+                <h6 th:if="${error != null}" th:text="${error}" style="color:red"></h6>
+            </div>
             <div id="contentDiv" style="clear: right;">
                 <nav style="clear: right;">
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -41,8 +45,6 @@
                                     <div class="col-sm-4">
                                         <button type="submit" class="btn btn-dark">Upload</button>
                                     </div>
-                                    <h6 th:if="${success != null}" th:text="${success}" style="color:darkgreen"></h6>
-                                    <h6 th:if="${error != null}" th:text="${error}" style="color:red"></h6>
                                 </div>
                             </div>
                         </form>
@@ -68,7 +70,7 @@
                     </div>
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
                         <div class="shadow-lg p-3 mb-5 bg-white rounded">
-                            You have no restrictions on the type of notes you would like to create. Please, remove any notes that you no longer need!
+                            You have no restrictions on notes that you create. Please, remove any notes that you no longer need!
                             You have the access to create, edit and delete notes.
                         </div>
                         <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">

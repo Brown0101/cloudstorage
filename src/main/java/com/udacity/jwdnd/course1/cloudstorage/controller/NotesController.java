@@ -44,17 +44,22 @@ public class NotesController {
         // Check if data exists in database already
         // We use this to update our data by searching
         // for our unique id.
+        String success = null;
+
         if(this.noteService.doesNoteExist(noteForm)) {
             this.noteService.updateNote(noteForm);
+            success = "Note " + noteForm.getNoteTitle() + " was modified successfully!";
         } else {
             this.noteService.trackLoggedInUserId(authentication.getName());
             this.noteService.createNote(noteForm);
+            success = "Note: " + noteForm.getNoteTitle() + " was created successfully!";
         }
 
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("encryption", this.encryptionService);
         model.addAttribute("files", this.fileService.getFiles());
+        model.addAttribute("success", success);
 
         return "home";
     }
@@ -66,6 +71,7 @@ public class NotesController {
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("encryption", this.encryptionService);
         model.addAttribute("files", this.fileService.getFiles());
+        model.addAttribute("success", "Note was deleted successfully.");
 
         return "home";
     }

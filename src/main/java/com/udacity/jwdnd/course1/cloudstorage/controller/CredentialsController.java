@@ -45,18 +45,22 @@ public class CredentialsController {
         // Check if data exists in database already
         // We use this to update our data by searching
         // for our unique id.
+        String success = null;
 
         if(this.credentialService.doesCredentialExist(credentialForm)) {
             this.credentialService.updateCredential(credentialForm);
+            success = "Credential " + credentialForm.getUsername() + " was updated successfully!";
         } else {
             this.credentialService.trackLoggedInUserId(authentication.getName());
             this.credentialService.createCredential(credentialForm);
+            success = "Credential " + credentialForm.getUsername() + " was created!";
         }
 
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("encryption", this.encryptionService);
         model.addAttribute("files", this.fileService.getFiles());
+        model.addAttribute("success", success);
 
         return "home";
     }
@@ -68,6 +72,7 @@ public class CredentialsController {
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("encryption", this.encryptionService);
         model.addAttribute("files", this.fileService.getFiles());
+        model.addAttribute("success", "Credential was deleted successfully");
 
         return "home";
     }
