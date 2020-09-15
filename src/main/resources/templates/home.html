@@ -26,7 +26,7 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
                         <div class="shadow-lg p-3 mb-5 bg-white rounded">
-                            We are using a special file in memory database. Large file type uploads will not be allowed. Also, files with the same name will not be allowed.
+                            We are using a special file in memory database. Large file type uploads over 1MB will not be allowed. Also, files with the same name will not be allowed.
                             You will be able to upload and download files for later use.
                         </div>
                         <form th:action="@{/files}" th:object="${fileForm}" enctype="multipart/form-data" method="POST">
@@ -41,6 +41,7 @@
                                     <div class="col-sm-4">
                                         <button type="submit" class="btn btn-dark">Upload</button>
                                     </div>
+                                    <h6 th:if="${success != null}" th:text="${success}" style="color:darkgreen"></h6>
                                     <h6 th:if="${error != null}" th:text="${error}" style="color:red"></h6>
                                 </div>
                             </div>

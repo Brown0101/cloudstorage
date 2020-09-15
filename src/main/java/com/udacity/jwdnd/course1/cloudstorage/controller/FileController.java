@@ -59,6 +59,7 @@ public class FileController {
         }
 
         String error = null;
+        String success = null;
 
         // Check if data exists in database already
         // We use this to update our data by searching
@@ -70,6 +71,7 @@ public class FileController {
         } else {
             this.fileService.trackLoggedInUserId(authentication.getName());
             this.fileService.createFile(fileForm);
+            success = fileForm.getFileName() + " was uploaded successfully!";
         }
 
         model.addAttribute("files", this.fileService.getFiles());
@@ -78,12 +80,16 @@ public class FileController {
         model.addAttribute("encryption", this.encryptionService);
         model.addAttribute("encryption", this.encryptionService);
         model.addAttribute("error", error);
+        model.addAttribute("success", success);
 
         return "home";
     }
 
     @GetMapping("/download")
-    public ResponseEntity<ByteArrayResource>  downloadFile(@RequestParam String fileName) {
+    public ResponseEntity<ByteArrayResource>  downloadFile(@RequestParam String fileName, Model model) {
+        String file = fileName + " was downloaded successfully!";
+        model.addAttribute("success", file);
+
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(this.fileService.getSingleFile(fileName).getContentType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileService.getSingleFile(fileName).getFileName() + "\"")
@@ -98,6 +104,7 @@ public class FileController {
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("encryption", this.encryptionService);
+        model.addAttribute("success", "File was deleted successfully!");
 
         return "home";
     }
