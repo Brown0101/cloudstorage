@@ -25,6 +25,10 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
+                        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                            We are using a special file in memory database. Large file type uploads will not be allowed. Also, files with the same name will not be allowed.
+                            You will be able to upload and download files for later use.
+                        </div>
                         <form th:action="@{/files}" th:object="${fileForm}" enctype="multipart/form-data" method="POST">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
@@ -62,6 +66,10 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
+                        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                            You have no restrictions on the type of notes you would like to create. Please, remove any notes that you no longer need!
+                            You have the access to create, edit and delete notes.
+                        </div>
                         <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
@@ -123,6 +131,10 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-credentials" role="tabpanel" aria-labelledby="nav-credentials-tab">
+                        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                            Credentials are encrypted. Please do not share credentials with anyone and report any security violations to management.
+                            You will be able to create, edit and delete credentials you have added.
+                        </div>
                         <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showCredentialModal()">
                             + Add a New Credential
                         </button>
