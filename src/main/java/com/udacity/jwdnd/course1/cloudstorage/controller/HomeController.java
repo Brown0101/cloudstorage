@@ -30,6 +30,10 @@ public class HomeController {
 
     @GetMapping
     public String home(Authentication authentication, NoteForm noteForm, CredentialForm credentialForm, FileForm fileForm, Model model) {
+        String username = authentication.getName();
+        this.noteService.trackLoggedInUserId(username);
+        this.credentialService.trackLoggedInUserId(username);
+        this.fileService.trackLoggedInUserId(username);
 
         getHomeDetails(authentication, model, this.noteService, this.credentialService, this.encryptionService, this.fileService, this.userService);
 

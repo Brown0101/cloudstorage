@@ -131,23 +131,28 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals(true, credentialTest.deleteRepositoryCredentials());
 	}
 
-	@Test
-	@Order(6)
-	// Not a requirement but created test out of practice
-	public void createViewDeleteCredentialTest() {
-		driver.get("http://localhost:" + this.port + "/login");
-		RegistrationTest registrationTest = new RegistrationTest(driver);
-
-		registrationTest.loginToAccount();
-
-		FilesTest filesTest = new FilesTest(driver);
-		filesTest.uploadFile();
-		Assertions.assertEquals(true, filesTest.fileUploadedExists());
-		filesTest.viewFile();
-		Assertions.assertEquals(true, filesTest.fileDownloaded());
-		filesTest.deleteFile();
-		Assertions.assertEquals(false, filesTest.fileUploadedExists());
-
-
-	}
+	/*
+		Not a requirement but created test out of practice.
+		If download file already exists then this will fail.
+		Also, if you run the below code you need to change to
+		your downloads directory on line 94 in FilesTest.java.
+	 */
+//	@Test
+//	@Order(6)
+//	public void createViewDeleteFileTest() {
+//		driver.get("http://localhost:" + this.port + "/login");
+//		RegistrationTest registrationTest = new RegistrationTest(driver);
+//
+//		registrationTest.loginToAccount();
+//
+//		FilesTest filesTest = new FilesTest(driver);
+//		filesTest.uploadFile();
+//		Assertions.assertEquals(true, filesTest.fileUploadedExists());
+//		filesTest.viewFile();
+//		Assertions.assertEquals(true, filesTest.fileDownloaded());
+//		filesTest.deleteFile();
+//		Assertions.assertEquals(false, filesTest.fileUploadedExists());
+//
+//
+//	}
 }
