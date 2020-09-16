@@ -35,11 +35,13 @@ public class CredentialsController {
         // for our unique id.
         String success = null;
 
+        // Get the current logged in user details
+        this.credentialService.trackLoggedInUserId(authentication.getName());
+
         if(this.credentialService.doesCredentialExist(credentialForm)) {
             this.credentialService.updateCredential(credentialForm);
             success = "Credential " + credentialForm.getUsername() + " was updated successfully!";
         } else {
-            this.credentialService.trackLoggedInUserId(authentication.getName());
             this.credentialService.createCredential(credentialForm);
             success = "Credential " + credentialForm.getUsername() + " was created!";
         }

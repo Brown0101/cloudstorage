@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 import com.udacity.jwdnd.course1.cloudstorage.mapper.CredentialMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.models.CredentialForm;
+import com.udacity.jwdnd.course1.cloudstorage.models.File;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -62,13 +63,14 @@ public class CredentialService {
     public Boolean doesCredentialExist(CredentialForm credentialForm) {
         Credential credential = new Credential();
         credential.setCredentialId(credentialForm.getCredentialId());
-        Integer idReturned = this.credentialMapper.getCredential(credential);
 
-        if(idReturned != null) {
-            return true;
-        } else {
-            return false;
+        for(Credential c : this.getAllCredentials()) {
+            if(c.getUsername().equals(c.getUsername())) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     private String generateEncodedKey() {
