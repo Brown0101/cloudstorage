@@ -44,13 +44,14 @@ public class FileService {
     public Boolean doesFileExist(FileForm fileForm) {
         File file = new File();
         file.setFileName(fileForm.getFileName());
-        Integer idReturned = this.fileMapper.getFile(file);
 
-        if(idReturned != null) {
-            return true;
-        } else {
-            return false;
+        for(File f : this.getFiles()) {
+            if(file.getFileName().equals(f.getFileName())) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     public List<File> getFiles() {

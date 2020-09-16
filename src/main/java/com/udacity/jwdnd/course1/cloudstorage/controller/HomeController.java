@@ -30,12 +30,17 @@ public class HomeController {
 
     @GetMapping
     public String home(Authentication authentication, NoteForm noteForm, CredentialForm credentialForm, FileForm fileForm, Model model) {
-        model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("encryption", this.encryptionService);
-        model.addAttribute("files", this.fileService.getFiles());
-        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
+
+        getHomeDetails(authentication, model, this.noteService, this.credentialService, this.encryptionService, this.fileService, this.userService);
 
         return "home";
+    }
+
+    static void getHomeDetails(Authentication authentication, Model model, NoteService noteService, CredentialService credentialService, EncryptionService encryptionService, FileService fileService, UserService userService) {
+        model.addAttribute("notes", noteService.getNotes());
+        model.addAttribute("credentials", credentialService.getAllCredentials());
+        model.addAttribute("encryption", encryptionService);
+        model.addAttribute("files", fileService.getFiles());
+        model.addAttribute("currentid", userService.getUserId(authentication.getName()));
     }
 }

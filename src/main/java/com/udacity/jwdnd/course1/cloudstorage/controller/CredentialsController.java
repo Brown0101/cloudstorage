@@ -28,17 +28,6 @@ public class CredentialsController {
         this.userService = userService;
     }
 
-    @GetMapping("/credentials")
-    public String getCredentials(Authentication authentication, CredentialForm credentialForm, NoteForm noteForm, FileForm fileForm, Model model) {
-        model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("encryption", this.encryptionService);
-        model.addAttribute("files", this.fileService.getFiles());
-        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
-
-        return "home";
-    }
-
     @PostMapping("/credentials")
     public String addUpdateCredential(Authentication authentication, CredentialForm credentialForm, NoteForm noteForm, FileForm fileForm, Model model) {
         // Check if data exists in database already
@@ -55,11 +44,7 @@ public class CredentialsController {
             success = "Credential " + credentialForm.getUsername() + " was created!";
         }
 
-        model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("encryption", this.encryptionService);
-        model.addAttribute("files", this.fileService.getFiles());
-        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
+        getCredentialDetails(authentication, model);
         model.addAttribute("success", success);
 
         return "home";
@@ -68,13 +53,17 @@ public class CredentialsController {
     @GetMapping("/credentials/delete/{credentialid}")
     public String deleteCredential(@PathVariable("credentialid") Integer credentialId, Authentication authentication, CredentialForm credentialForm, NoteForm noteForm, FileForm fileForm, Model model) {
         this.credentialService.deleteCredential(credentialId);
+        getCredentialDetails(authentication, model);
+        model.addAttribute("success", "Credential was deleted successfully");
+
+        return "home";
+    }
+
+    private void getCredentialDetails(Authentication authentication, Model model) {
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("encryption", this.encryptionService);
         model.addAttribute("files", this.fileService.getFiles());
         model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
-        model.addAttribute("success", "Credential was deleted successfully");
-
-        return "home";
     }
 }

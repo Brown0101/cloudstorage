@@ -28,17 +28,6 @@ public class NotesController {
         this.userService = userService;
     }
 
-    @GetMapping("/notes")
-    public String getNotes(Authentication authentication, NoteForm noteForm, CredentialForm credentialForm, FileForm fileForm, Model model) {
-        model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("encryption", this.encryptionService);
-        model.addAttribute("files", this.fileService.getFiles());
-        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
-
-        return "home";
-    }
-
     @PostMapping("/notes")
     public String addUpdateNotes(Authentication authentication, NoteForm noteForm, CredentialForm credentialForm, FileForm fileForm, Model model) {
         // Check if data exists in database already
@@ -55,11 +44,7 @@ public class NotesController {
             success = "Note: " + noteForm.getNoteTitle() + " was created successfully!";
         }
 
-        model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("encryption", this.encryptionService);
-        model.addAttribute("files", this.fileService.getFiles());
-        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
+        HomeController.getHomeDetails(authentication, model, this.noteService, this.credentialService, this.encryptionService, this.fileService, this.userService);
         model.addAttribute("success", success);
 
         return "home";
@@ -68,11 +53,7 @@ public class NotesController {
     @GetMapping("/notes/delete/{noteid}")
     public String deleteNotes(@PathVariable("noteid") Integer noteId, Authentication authentication, NoteForm noteForm, CredentialForm credentialForm, FileForm fileForm, Model model) {
         this.noteService.deleteNote(noteId);
-        model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("encryption", this.encryptionService);
-        model.addAttribute("files", this.fileService.getFiles());
-        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
+        HomeController.getHomeDetails(authentication, model, this.noteService, this.credentialService, this.encryptionService, this.fileService, this.userService);
         model.addAttribute("success", "Note was deleted successfully.");
 
         return "home";

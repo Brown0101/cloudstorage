@@ -35,17 +35,6 @@ public class FileController {
         this.userService = userService;
     }
 
-    @GetMapping("/files")
-    public String getFile(Authentication authentication, FileForm fileForm, NoteForm noteForm, CredentialForm credentialForm, Model model) {
-        model.addAttribute("files", this.fileService.getFiles());
-        model.addAttribute("notes", this.noteService.getNotes());
-        model.addAttribute("credentials", this.credentialService.getAllCredentials());
-        model.addAttribute("encryption", this.encryptionService);
-        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
-
-        return "home";
-    }
-
     @PostMapping("/files")
     public String addUpdateFile(Authentication authentication, @RequestParam("fileUpload") MultipartFile file, FileForm fileForm, NoteForm noteForm, CredentialForm credentialForm, Model model) {
         try {
@@ -61,6 +50,9 @@ public class FileController {
         String error = null;
         String success = null;
 
+        // Need to get current userId value
+        this.fileService.trackLoggedInUserId(authentication.getName());
+
         // Check if data exists in database already
         // We use this to update our data by searching
         // for our unique id or name is blank.
@@ -69,7 +61,6 @@ public class FileController {
         } else if(this.fileService.doesFileExist(fileForm)) {
             error = "Sorry, files containing the same name can't up uploaded. Trying renaming your file then upload it again.";
         } else {
-            this.fileService.trackLoggedInUserId(authentication.getName());
             this.fileService.createFile(fileForm);
             success = fileForm.getFileName() + " was uploaded successfully!";
         }
