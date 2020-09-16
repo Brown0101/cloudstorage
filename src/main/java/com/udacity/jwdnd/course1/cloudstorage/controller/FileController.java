@@ -3,10 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 import com.udacity.jwdnd.course1.cloudstorage.models.CredentialForm;
 import com.udacity.jwdnd.course1.cloudstorage.models.FileForm;
 import com.udacity.jwdnd.course1.cloudstorage.models.NoteForm;
-import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
-import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
-import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
-import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
+import com.udacity.jwdnd.course1.cloudstorage.services.*;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -28,20 +25,23 @@ public class FileController {
     private NoteService noteService;
     private CredentialService credentialService;
     private EncryptionService encryptionService;
+    private UserService userService;
 
-    public FileController(FileService fileService, NoteService noteService, CredentialService credentialService, EncryptionService encryptionService) {
+    public FileController(FileService fileService, NoteService noteService, CredentialService credentialService, EncryptionService encryptionService, UserService userService) {
         this.fileService = fileService;
         this.noteService = noteService;
         this.credentialService = credentialService;
         this.encryptionService = encryptionService;
+        this.userService = userService;
     }
 
     @GetMapping("/files")
-    public String getFile(FileForm fileForm, NoteForm noteForm, CredentialForm credentialForm, Model model) {
+    public String getFile(Authentication authentication, FileForm fileForm, NoteForm noteForm, CredentialForm credentialForm, Model model) {
         model.addAttribute("files", this.fileService.getFiles());
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("encryption", this.encryptionService);
+        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
 
         return "home";
     }
@@ -79,6 +79,7 @@ public class FileController {
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("encryption", this.encryptionService);
         model.addAttribute("encryption", this.encryptionService);
+        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
         model.addAttribute("error", error);
         model.addAttribute("success", success);
 
@@ -95,13 +96,14 @@ public class FileController {
     }
 
     @GetMapping("/files/delete/{fileid}")
-    public String deleteNote(@PathVariable("fileid") Integer fileId, FileForm fileForm, NoteForm noteForm, CredentialForm credentialForm, Model model) {
+    public String deleteNote(@PathVariable("fileid") Integer fileId, Authentication authentication, FileForm fileForm, NoteForm noteForm, CredentialForm credentialForm, Model model) {
         this.fileService.deleteFile(fileId);
 
         model.addAttribute("files", this.fileService.getFiles());
         model.addAttribute("notes", this.noteService.getNotes());
         model.addAttribute("credentials", this.credentialService.getAllCredentials());
         model.addAttribute("encryption", this.encryptionService);
+        model.addAttribute("currentid", this.userService.getUserId(authentication.getName()));
         model.addAttribute("success", "File was deleted successfully!");
 
         return "home";

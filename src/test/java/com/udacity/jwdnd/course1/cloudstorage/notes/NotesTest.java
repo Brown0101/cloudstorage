@@ -14,7 +14,7 @@ public class NotesTest {
     private JavascriptExecutor jse;
     private WebDriver driver;
 
-    @FindBy(xpath="/html/body/div/div[2]/nav/div/a[2]")
+    @FindBy(xpath="//*[@id=\"nav-notes-tab\"]")
     private WebElement navNotestab;
 
     @FindBy(css="#nav-notes > button")
