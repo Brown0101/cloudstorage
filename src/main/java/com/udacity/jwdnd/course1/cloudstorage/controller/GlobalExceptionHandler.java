@@ -10,6 +10,7 @@ public class GlobalExceptionHandler {
 
     //https://jira.spring.io/browse/SPR-14651
     //Spring 4.3.5 supports RedirectAttributes
+    // Used example from: https://mkyong.com/spring-boot/spring-boot-file-upload-example/
     @ExceptionHandler(MultipartException.class)
     public String handleError1(MultipartException e, RedirectAttributes redirectAttributes) {
 
