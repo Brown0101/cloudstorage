@@ -32,9 +32,7 @@ public class FileService {
     }
 
     public File getSingleFile(String fileName) {
-        File file = new File();
-
-        return fileMapper.getFileData(fileName);
+        return fileMapper.getFileData(fileName, this.userId);
     }
 
     public void deleteFile(Integer fileId) {

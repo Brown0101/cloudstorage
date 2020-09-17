@@ -78,7 +78,9 @@ public class FileController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<ByteArrayResource>  downloadFile(@RequestParam String fileName, Model model) {
+    public ResponseEntity<ByteArrayResource>  downloadFile(Authentication authentication, @RequestParam String fileName, FileForm fileForm, Model model) {
+
+        this.fileService.trackLoggedInUserId(authentication.getName());
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(this.fileService.getSingleFile(fileName).getContentType()))

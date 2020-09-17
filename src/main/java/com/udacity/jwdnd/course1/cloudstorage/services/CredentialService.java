@@ -62,10 +62,10 @@ public class CredentialService {
 
     public Boolean doesCredentialExist(CredentialForm credentialForm) {
         Credential credential = new Credential();
-        credential.setCredentialId(credentialForm.getCredentialId());
+        credential.setUsername(credentialForm.getUsername());
 
         for(Credential c : this.getAllCredentials()) {
-            if(c.getUsername().equals(c.getUsername())) {
+            if(c.getUsername().equals(credential.getUsername())) {
                 return true;
             }
         }
