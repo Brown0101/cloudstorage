@@ -126,9 +126,13 @@ class CloudStorageApplicationTests {
 		// Check if password can be changed and encryption updated
 		Assertions.assertEquals(true, credentialTest.editStaffCredential());
 
-		// Check if we can delete the repository entry
+		// Delete the repository entry
 		credentialTest.openCredentialsTab();
-		Assertions.assertEquals(true, credentialTest.deleteRepositoryCredentials());
+		credentialTest.deleteRepositoryCredentials();
+
+		// Check if repository entry still exists
+		credentialTest.openCredentialsTab();
+		Assertions.assertEquals(true, credentialTest.validateRepositoryCredentialsExist());
 	}
 
 	/*

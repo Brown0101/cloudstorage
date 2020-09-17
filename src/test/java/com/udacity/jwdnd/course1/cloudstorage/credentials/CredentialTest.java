@@ -164,8 +164,9 @@ public class CredentialTest {
     public Boolean getCurrentAdminEncryptedCredentails() {
         System.out.println("Validating if admin test account credentials are encrypted");
         try {
-            String adminPassword = new WebDriverWait(this.driver, 5)
-                    .until(ExpectedConditions.elementToBeClickable(this.adminCurrentCredentials))
+            Thread.sleep(2000);
+            String adminPassword = new WebDriverWait(this.driver, 15)
+                    .until(ExpectedConditions.visibilityOf(this.adminCurrentCredentials))
                     .getText();
 
             if(adminPassword != "password123") {
@@ -180,9 +181,10 @@ public class CredentialTest {
         }
     }
 
-    public Boolean deleteRepositoryCredentials() {
+    public void deleteRepositoryCredentials() {
         System.out.println("Deleting the repository test credentials");
         try {
+            Thread.sleep(2000);
             if(this.repositoryCurrentStatus.getText().length() > 0) {
                 System.out.println("Repository is an active entry");
             }
@@ -192,10 +194,20 @@ public class CredentialTest {
                     .until(ExpectedConditions.elementToBeClickable(this.deleteRepositoryButton))
                     .click();
 
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public Boolean validateRepositoryCredentialsExist() {
+        try {
+            Thread.sleep(2000);
+
             // If entry does not exist this will jump into the catch area as expected.
-            Boolean isActive = this.repositoryCurrentStatus.getText().length() > 0;
-            System.out.println("FAILED: Entry still exists!");
-            return false;
+            Boolean repoCredentialsExist = this.repositoryCurrentStatus.getText().length() > 0;
+
+            return repoCredentialsExist;
         } catch (Exception e) {
             System.out.println("Entry no longer exists!");
             return true;
