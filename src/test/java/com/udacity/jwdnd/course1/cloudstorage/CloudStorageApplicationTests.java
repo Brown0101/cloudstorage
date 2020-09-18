@@ -65,7 +65,6 @@ class CloudStorageApplicationTests {
 		RegistrationTest registrationTest = new RegistrationTest(driver);
 		registrationTest.clickRegisterLink();
 		registrationTest.registerAccount();
-		registrationTest.getLoginPage();
 		registrationTest.loginToAccount();
 		Assertions.assertEquals("Home", driver.getTitle());
 		registrationTest.logoutAccount();
